@@ -1,28 +1,31 @@
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the sockMerchant function below.
 def sockMerchant(n, ar):
-
-    # initialize a dictionary as a stack
-    stack = {}
-    # keep track of pair count
-    pair_count = 0
-
-    # iterate through array using n length
-    for i in range(n):
-        # if stack contains matching sock color integer
-        if stack.get(ar[i], None):
-            # pop matching sock color from stack
-            stack.pop(ar[i])
-            # increment pair count only when a matching pair is found
-            pair_count += 1
-        # if stack does not contain sock color, push integer to stack
+    pair = dict()
+    for i in ar:
+        if i in pair:
+            pair[i] += 1
         else:
-            # adding stack as a key for dictionary stack
-            stack[ar[i]] = 1
-
-    return pair_count
-
+            pair[i] = 1
+    count = 0
+    for key, val in pair.items():
+        count += (val//2)
+    return count
 
 if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    n = 9
-    ar = [10, 20, 20, 10, 10, 30, 50, 10, 20]
-    print(sockMerchant(n, ar))
+    n = int(input())
+
+    ar = list(map(int, input().rstrip().split()))
+
+    result = sockMerchant(n, ar)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
